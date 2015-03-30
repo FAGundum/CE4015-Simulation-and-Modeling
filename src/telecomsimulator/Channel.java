@@ -21,6 +21,12 @@ public class Channel {
         
     }
     
+    public int getId() {
+        
+        return this.id;
+        
+    }
+    
     public void reserve() {
         
         this.reservation  = true;
@@ -43,7 +49,7 @@ public class Channel {
         
         String msg = (this.reservation)?"reserved!":"free!";
         
-        return "Channel " + this.id + " is currently " + msg;
+        return "Channel " + this.id + " is currently " + msg + "\n";
         
     }
     

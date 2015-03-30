@@ -10,12 +10,17 @@ package telecomsimulator;
  * @author Derek
  */
 public class TelecomSimulator {
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        initialization();
+        
+    }
+    
+    private static void initialization() {
+        
+        
+        
     }
     
 }
