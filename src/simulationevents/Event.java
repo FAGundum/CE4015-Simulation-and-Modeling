@@ -5,11 +5,11 @@
  */
 package simulationevents;
 
-public abstract class Events {
+public abstract class Event {
     
     protected int time;
     
-    protected Events(int time) {
+    protected Event(int time) {
         
         this.time = time;
     

@@ -6,6 +6,7 @@
 package telecomsimulator;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import simulationevents.*;
 
 public class TelecomSimulator {
@@ -20,7 +21,7 @@ public class TelecomSimulator {
     private static int numberOfBlockedCalls;
     
     // Event list
-    private static ArrayList<Events> eventList;
+    private static LinkedList<Event> eventList;
     
     
     
@@ -28,8 +29,15 @@ public class TelecomSimulator {
         
         initialization();
         
+        while(true) {
+            
+            Event currentEvent = scheduler();
+            
+        }
+        
     }
-    
+        
+    // Initialization Routine
     private static void initialization() {
         
         simulationClock = 0;
@@ -47,8 +55,18 @@ public class TelecomSimulator {
         }
         
         // initialize event list, the event list will start with a Call Initiation Event
-        eventList = new ArrayList<>();
-        eventList.add(new CallInitiationEvent(0, 120, 1, 0, 110));
+        eventList = new LinkedList<>();
+        eventList.push(new CallInitiationEvent(0, 120, 1, 0, 110));
+        
+    }
+    
+    // Timing Routine
+    private static Event scheduler() {
+        
+        Event currentEvent = eventList.pop();
+        simulationClock = currentEvent.getTime();
+        
+        return currentEvent;
         
     }
     

@@ -5,7 +5,7 @@
  */
 package simulationevents;
 
-public class CallHandOverEvent extends Events {
+public class CallHandOverEvent extends Event {
     
     private final double speed;
     private final int station;

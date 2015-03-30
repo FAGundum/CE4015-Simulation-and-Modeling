@@ -5,7 +5,7 @@
  */
 package simulationevents;
 
-public class CallTerminationEvent extends Events {
+public class CallTerminationEvent extends Event {
     
     private final int station;
     
