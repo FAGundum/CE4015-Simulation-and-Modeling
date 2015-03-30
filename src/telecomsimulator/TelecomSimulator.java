@@ -6,9 +6,11 @@
 package telecomsimulator;
 
 import java.util.*;
-import simulationevents.*;
 
 public class TelecomSimulator {
+    
+    private static final int TOTAL_SIMULATION_TIMES = 1000;
+    private static final int TOTAL_WARMUP_TIMES = 20;
     
     // Simulation clock
     private static int simulationClock;
@@ -28,10 +30,43 @@ public class TelecomSimulator {
         
         while(true) {
             
-            Event currentEvent = scheduler();
+            Event currentEvent = schedule();
             execute(currentEvent);
             
+            if (numberOfCalls > TOTAL_SIMULATION_TIMES) {
+                
+                // Compute statistics and write report
+                break;
+            }
         }
+        
+    }
+    
+    /**
+     * The function will try to reserve a channel from base station.
+     * 
+     * @param baseStationId the current baseStation user is accessing.
+     * @return Return 0 indicating all channels have been reserved, Return 1-10 indicating this particular channel is reserved for this Call.
+     * 
+     */
+    public static int tryReserve(int baseStationId) {
+        
+        int channelId = baseStations.get(baseStationId).isFull();
+        
+        if (channelId == 0) {
+            
+            return channelId;
+        
+        }
+        
+        baseStations.get(baseStationId).reserveChannel(channelId);
+        
+        return channelId;
+    }
+    
+    public static void release(int baseStationId, int channelId) {
+        
+        baseStations.get(baseStationId).releaseChannel(channelId);
         
     }
     
@@ -54,7 +89,6 @@ public class TelecomSimulator {
         if (inserted == false) {
             
             eventList.addLast(e);
-            inserted = true;
             
         }
         
@@ -104,7 +138,7 @@ public class TelecomSimulator {
     }
     
     // Timing Routine
-    private static Event scheduler() {
+    private static Event schedule() {
         
         Event currentEvent = eventList.pop();
         simulationClock = currentEvent.getTime();
