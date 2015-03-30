@@ -62,7 +62,7 @@ public class CallInitiationEvent extends Event{
                 
         // 3.1 Generate handover or departure events
         double distanceToNextStation = (stationId * 2 - position);
-        int durationToNextStation = (int) Math.round(distanceToNextStation / speed * 3600);
+        int durationToNextStation = (int) Math.round(distanceToNextStation / speed * 3600 * 1000);
         
         if (duration > durationToNextStation && stationId != 20) {
             

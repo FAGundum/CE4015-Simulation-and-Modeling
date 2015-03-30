@@ -5,27 +5,58 @@
  */
 package telecomsimulator;
 
+import java.util.Random;
+
 // Library routine
 public class Utils {
-
+    
+    private static final int SEED = 1;
+    
     public static int generateInterArrivalTime() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        //double random = Math.random();
+        double random = new Random(SEED).nextDouble();
+        
+        return (int) Math.floor(-1000 / 0.7300976 * Math.log(1 - random));
     }
 
     public static double generateCarSpeed() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        //double random = Math.random();
+        Random randomGenerator = new Random(SEED);
+        double random = 0;
+        
+        for (int i = 1; i <=12; i++) {
+            random += randomGenerator.nextDouble();
+        }
+        
+        random -= 6;
+        
+        return (random * 9.019) + 120.07;
     }
 
     public static int generateStationId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        //double random = Math.random();
+        double random = new Random(SEED).nextDouble();
+        
+        return (int) Math.ceil(random * 20);
     }
 
     public static double generatePosition() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        //double random = Math.random();
+        double random = new Random(SEED).nextDouble();
+        
+        return random * 2;
     }
 
     public static int generateDuration() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        //double random = Math.random();
+        double random = new Random(SEED).nextDouble();
+        
+        return (int) Math.floor(-1000 / 0.0091045 * Math.log(1 - random));
     }
     
 }

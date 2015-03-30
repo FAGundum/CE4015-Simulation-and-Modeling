@@ -63,7 +63,7 @@ public class CallHandOverEvent extends Event {
         
         // 3. Generate future events and add to event list
         double distanceToNextStation = 2;
-        int durationToNextStation = (int) Math.round(distanceToNextStation / speed * 3600);
+        int durationToNextStation = (int) Math.round(distanceToNextStation / speed * 3600 * 1000);
         
         if (remainingDuration > durationToNextStation && stationId != 20) {
             
