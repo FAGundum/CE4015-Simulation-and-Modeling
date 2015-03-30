@@ -9,9 +9,9 @@ public class CallHandOverEvent extends Events {
     
     private final double speed;
     private final int station;
-    private final double remainingDuration;
+    private final int remainingDuration;
     
-    public CallHandOverEvent(double time, double speed, int station, double remainingDuration) {
+    public CallHandOverEvent(int time, double speed, int station, int remainingDuration) {
         
         super(time);
         this.speed = speed;
@@ -32,7 +32,7 @@ public class CallHandOverEvent extends Events {
         
     }
     
-    public double getRemainingDuration() {
+    public int getRemainingDuration() {
         
         return this.remainingDuration;
         

@@ -9,7 +9,7 @@ public class CallTerminationEvent extends Events {
     
     private final int station;
     
-    public CallTerminationEvent(double time, int station) {
+    public CallTerminationEvent(int time, int station) {
         
         super(time);
         this.station = station;

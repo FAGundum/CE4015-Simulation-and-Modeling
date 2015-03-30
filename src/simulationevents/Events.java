@@ -7,15 +7,15 @@ package simulationevents;
 
 public abstract class Events {
     
-    protected double time;
+    protected int time;
     
-    protected Events(double time) {
+    protected Events(int time) {
         
         this.time = time;
     
     }
     
-    public double getTime() {
+    public int getTime() {
         
         return this.time;
         

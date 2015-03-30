@@ -18,9 +18,9 @@ public class TelecomSimulator {
     private static int numberOfCalls;
     private static int numberOfDroppedCalls;
     private static int numberOfBlockedCalls;
-    private static ArrayList<Events> eventList;
     
     // Event list
+    private static ArrayList<Events> eventList;
     
     
     
@@ -45,6 +45,10 @@ public class TelecomSimulator {
             baseStations.add(i, new BaseStation(i));
             
         }
+        
+        // initialize event list, the event list will start with a Call Initiation Event
+        eventList = new ArrayList<>();
+        eventList.add(new CallInitiationEvent(0, 120, 1, 0, 110));
         
     }
     

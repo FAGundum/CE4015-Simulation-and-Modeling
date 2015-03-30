@@ -10,9 +10,9 @@ public class CallInitiationEvent extends Events{
     private final double speed;
     private final int station;
     private final double position;
-    private final double duration;
+    private final int duration;
     
-    public CallInitiationEvent(double time, double speed, int station, double position, double duration) {
+    public CallInitiationEvent(int time, double speed, int station, double position, int duration) {
         
         super(time);
         this.speed = speed;
@@ -40,7 +40,7 @@ public class CallInitiationEvent extends Events{
         
     }
     
-    public double getDuration() {
+    public int getDuration() {
         
         return this.duration;
         
