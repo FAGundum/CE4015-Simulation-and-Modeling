@@ -90,6 +90,13 @@ public class CallInitiationEvent extends Event{
         }
         
         // 3.2 generate new call
+        int newEventTime = time + Utils.generateInterArrivalTime();
+        double newSpeed = Utils.generateCarSpeed();
+        int newStationId = Utils.generateStationId();
+        double newPosition = Utils.generatePosition();
+        int newDuration = Utils.generateDuration();
+        
+        TelecomSimulator.insertEvent(new CallInitiationEvent(newEventTime, newSpeed, newStationId, newPosition, newDuration));
         
     }
     
