@@ -29,9 +29,15 @@ public class BaseStation {
         
     }
     
-    // Return 0 indicating all channels are reserved
-    // Return 1-10 indicating this particular channel is not reserved
-    public int isFull() {
+    // 
+
+    /**
+     * The function check if the channels of base station are all reserved.
+     * 
+     * @return Return 0 indicating all channels are reserved, Return 1-10 indicating this particular channel is not reserved
+     * 
+     */
+        public int isFull() {
         
         for (int i = 1; i <= 10; i++) {
             
