@@ -15,6 +15,8 @@ public abstract class Event {
     
     }
     
+    public abstract void handle();
+    
     public int getTime() {
         
         return this.time;

@@ -5,8 +5,7 @@
  */
 package telecomsimulator;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
 import simulationevents.*;
 
 public class TelecomSimulator {
@@ -23,8 +22,6 @@ public class TelecomSimulator {
     // Event list
     private static LinkedList<Event> eventList;
     
-    
-    
     public static void main(String[] args) {
         
         initialization();
@@ -32,11 +29,57 @@ public class TelecomSimulator {
         while(true) {
             
             Event currentEvent = scheduler();
+            execute(currentEvent);
             
         }
         
     }
+    
+    public static void insertEvent(Event e) {
         
+        boolean inserted = false;
+        
+        for (int i = 0; i < eventList.size(); i++) {
+            
+            if (eventList.get(i).getTime() > e.getTime()) {
+                
+                eventList.add(i, e);
+                inserted = true;
+                break;
+                
+            }
+            
+        }
+        
+        if (inserted == false) {
+            
+            eventList.addLast(e);
+            inserted = true;
+            
+        }
+        
+    }
+    
+    public static void recordNormalCall() {
+        
+        numberOfCalls++;
+        
+    }
+    
+    public static void recordDroppedCall() {
+        
+        numberOfCalls++;
+        numberOfDroppedCalls++;
+        
+    }
+    
+    public static void recordBlockedCall() {
+        
+        numberOfCalls++;
+        numberOfBlockedCalls++;
+        
+    }
+    
     // Initialization Routine
     private static void initialization() {
         
@@ -67,6 +110,13 @@ public class TelecomSimulator {
         simulationClock = currentEvent.getTime();
         
         return currentEvent;
+        
+    }
+    
+    // Event Routine
+    private static void execute(Event e) {
+        
+        e.handle();
         
     }
     
