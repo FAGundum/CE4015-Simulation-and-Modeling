@@ -34,12 +34,12 @@ public class BaseStation {
     /**
      * The function check if the channels of base station are all reserved.
      * 
-     * @return Return 0 indicating all channels are reserved, Return 1-10 indicating this particular channel is not reserved
+     * @return Return -1 indicating all channels are reserved, Return 0-9 indicating this particular channel is not reserved
      * 
      */
         public int isFull() {
         
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 0; i < 10; i++) {
             
             if (!this.channels.get(i).isReserved()) {
                 return i;
@@ -47,7 +47,7 @@ public class BaseStation {
             
         }
         
-        return 0;
+        return -1;
         
     }
     
@@ -67,7 +67,7 @@ public class BaseStation {
         
         String msg = "Status of Base Station " + this.id + " is shown below: \n ";
         
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 0; i < 10; i++) {
             
             msg += this.channels.get(i).debugMsg();
             
@@ -82,7 +82,7 @@ public class BaseStation {
         this.channels = new ArrayList<>();
         
         // Initialize 10 free channels
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 0; i < 10; i++) {
             
             this.channels.add(i, new Channel(i));
             

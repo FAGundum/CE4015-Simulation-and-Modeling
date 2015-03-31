@@ -53,18 +53,28 @@ public class CallInitiationEvent extends Event{
         int channelId = TelecomSimulator.tryReserve(stationId);
         
         // 2. Update statistical counters
-        if (channelId == 0) {
+        if (channelId == -1) {
             
             TelecomSimulator.recordBlockedCall();
+            
+            // 3 generate new call
+            int newEventTime = time + Utils.generateInterArrivalTime();
+            double newSpeed = Utils.generateCarSpeed();
+            int newStationId = Utils.generateStationId();
+            double newPosition = Utils.generatePosition();
+            int newDuration = Utils.generateDuration();
+        
+            TelecomSimulator.insertEvent(new CallInitiationEvent(newEventTime, newSpeed, newStationId, newPosition, newDuration));
+        
             return;
             
         }
                 
         // 3.1 Generate handover or departure events
-        double distanceToNextStation = (stationId * 2 - position);
+        double distanceToNextStation = ((stationId+1) * 2 - position);
         int durationToNextStation = (int) Math.round(distanceToNextStation / speed * 3600 * 1000);
         
-        if (duration > durationToNextStation && stationId != 20) {
+        if (duration > durationToNextStation && stationId != 19) {
             
             // Need to handover
             int newEventTime = time + durationToNextStation;
@@ -73,7 +83,7 @@ public class CallInitiationEvent extends Event{
             
             TelecomSimulator.insertEvent(new CallHandOverEvent(newEventTime, speed, newEventStationId, channelId, remainingDuration));
             
-        } else if (duration > durationToNextStation && stationId == 20) {
+        } else if (duration > durationToNextStation && stationId == 19) {
             
             // the car has travelled outside of the system
             int newEventTime = time + durationToNextStation;

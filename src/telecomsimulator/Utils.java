@@ -10,12 +10,13 @@ import java.util.Random;
 // Library routine
 public class Utils {
     
-    private static final int SEED = 1;
+    private static int seed = 3;
     
     public static int generateInterArrivalTime() {
         
         //double random = Math.random();
-        double random = new Random(SEED).nextDouble();
+        double random = new Random(seed).nextDouble();
+        seed = new Random(seed).nextInt();
         
         return (int) Math.floor(-1000 / 0.7300976 * Math.log(1 - random));
     }
@@ -23,7 +24,8 @@ public class Utils {
     public static double generateCarSpeed() {
         
         //double random = Math.random();
-        Random randomGenerator = new Random(SEED);
+        Random randomGenerator = new Random(seed);
+        seed = new Random(seed).nextInt();
         double random = 0;
         
         for (int i = 1; i <=12; i++) {
@@ -38,15 +40,17 @@ public class Utils {
     public static int generateStationId() {
        
         //double random = Math.random();
-        double random = new Random(SEED).nextDouble();
+        double random = new Random(seed).nextDouble();
+        seed = new Random(seed).nextInt();
         
-        return (int) Math.ceil(random * 20);
+        return (int) Math.floor(random * 20);
     }
 
     public static double generatePosition() {
         
         //double random = Math.random();
-        double random = new Random(SEED).nextDouble();
+        double random = new Random(seed).nextDouble();
+        seed = new Random(seed).nextInt();
         
         return random * 2;
     }
@@ -54,7 +58,8 @@ public class Utils {
     public static int generateDuration() {
         
         //double random = Math.random();
-        double random = new Random(SEED).nextDouble();
+        double random = new Random(seed).nextDouble();
+        seed = new Random(seed).nextInt();
         
         return (int) Math.floor(-1000 / 0.0091045 * Math.log(1 - random));
     }

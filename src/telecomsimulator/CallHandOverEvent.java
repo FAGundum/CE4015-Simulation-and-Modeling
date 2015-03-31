@@ -54,7 +54,7 @@ public class CallHandOverEvent extends Event {
         int newChannelId = TelecomSimulator.tryReserve(stationId);
         
         // 2. Update statistical counters
-        if (newChannelId == 0) {
+        if (newChannelId == -1) {
             
             TelecomSimulator.recordDroppedCall();
             return;
@@ -65,7 +65,7 @@ public class CallHandOverEvent extends Event {
         double distanceToNextStation = 2;
         int durationToNextStation = (int) Math.round(distanceToNextStation / speed * 3600 * 1000);
         
-        if (remainingDuration > durationToNextStation && stationId != 20) {
+        if (remainingDuration > durationToNextStation && stationId != 19) {
             
             // Need to handover
             int newEventTime = time + durationToNextStation;
@@ -74,7 +74,7 @@ public class CallHandOverEvent extends Event {
             
             TelecomSimulator.insertEvent(new CallHandOverEvent(newEventTime, speed, newEventStationId, channelId, newRemainingDuration));
             
-        } else if (remainingDuration > durationToNextStation && stationId == 20) {
+        } else if (remainingDuration > durationToNextStation && stationId == 19) {
             
             // the car has travelled outside of the system
             int newEventTime = time + durationToNextStation;

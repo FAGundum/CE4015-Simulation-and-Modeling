@@ -33,9 +33,12 @@ public class TelecomSimulator {
             Event currentEvent = schedule();
             execute(currentEvent);
             
-            if (numberOfCalls > TOTAL_SIMULATION_TIMES) {
+            if (numberOfCalls >= TOTAL_SIMULATION_TIMES) {
                 
                 // Compute statistics and write report
+                System.out.println("Total call simulated: " + numberOfCalls);
+                System.out.println("Total dropped call: " + numberOfDroppedCalls);
+                System.out.println("Total blocked call: " + numberOfBlockedCalls);
                 break;
             }
         }
@@ -46,14 +49,14 @@ public class TelecomSimulator {
      * The function will try to reserve a channel from base station.
      * 
      * @param baseStationId the current baseStation user is accessing.
-     * @return Return 0 indicating all channels have been reserved, Return 1-10 indicating this particular channel is reserved for this Call.
+     * @return Return -1 indicating all channels have been reserved, Return 0-9 indicating this particular channel is reserved for this Call.
      * 
      */
     public static int tryReserve(int baseStationId) {
         
         int channelId = baseStations.get(baseStationId).isFull();
         
-        if (channelId == 0) {
+        if (channelId == -1) {
             
             return channelId;
         
@@ -125,7 +128,7 @@ public class TelecomSimulator {
         baseStations = new ArrayList<>();
         
         // initialize 20 base stations
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 0; i < 20; i++) {
             
             baseStations.add(i, new BaseStation(i));
             
@@ -133,7 +136,7 @@ public class TelecomSimulator {
         
         // initialize event list, the event list will start with a Call Initiation Event
         eventList = new LinkedList<>();
-        eventList.push(new CallInitiationEvent(0, 120, 1, 0, 110));
+        eventList.push(new CallInitiationEvent(0, 120, 0, 0, 110000));
         
     }
     
