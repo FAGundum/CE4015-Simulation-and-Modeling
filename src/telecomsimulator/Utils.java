@@ -10,7 +10,7 @@ import java.util.Random;
 // Library routine
 public class Utils {
     
-    private static int seed = 3;
+    private static int seed = 1;
     
     public static int generateInterArrivalTime() {
         
