@@ -33,6 +33,22 @@ public class TelecomSimulator {
             Event currentEvent = schedule();
             execute(currentEvent);
             
+            if (numberOfCalls >= TOTAL_WARMUP_TIMES) {
+                
+                numberOfCalls = 0;
+                numberOfDroppedCalls = 0;
+                numberOfBlockedCalls = 0;
+                break;
+                
+            }
+            
+        }
+        
+        while(true) {
+            
+            Event currentEvent = schedule();
+            execute(currentEvent);
+            
             if (numberOfCalls >= TOTAL_SIMULATION_TIMES) {
                 
                 // Compute statistics and write report

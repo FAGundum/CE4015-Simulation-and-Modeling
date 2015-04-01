@@ -14,22 +14,21 @@ public class Utils {
     
     public static int generateInterArrivalTime() {
         
-        //double random = Math.random();
-        double random = new Random(seed).nextDouble();
-        seed = new Random(seed).nextInt();
+        double random = Math.random();
+        //double random = new Random(seed).nextDouble();
+        //seed = new Random(seed).nextInt();
         
         return (int) Math.floor(-1000 / 0.7300976 * Math.log(1 - random));
     }
 
     public static double generateCarSpeed() {
         
-        //double random = Math.random();
-        Random randomGenerator = new Random(seed);
-        seed = new Random(seed).nextInt();
+        //Random randomGenerator = new Random(seed);
+        //seed = new Random(seed).nextInt();
         double random = 0;
         
         for (int i = 1; i <=12; i++) {
-            random += randomGenerator.nextDouble();
+            random += Math.random();
         }
         
         random -= 6;
@@ -39,27 +38,27 @@ public class Utils {
 
     public static int generateStationId() {
        
-        //double random = Math.random();
-        double random = new Random(seed).nextDouble();
-        seed = new Random(seed).nextInt();
+        double random = Math.random();
+        //double random = new Random(seed).nextDouble();
+        //seed = new Random(seed).nextInt();
         
         return (int) Math.floor(random * 20);
     }
 
     public static double generatePosition() {
         
-        //double random = Math.random();
-        double random = new Random(seed).nextDouble();
-        seed = new Random(seed).nextInt();
+        double random = Math.random();
+        //double random = new Random(seed).nextDouble();
+        //seed = new Random(seed).nextInt();
         
         return random * 2;
     }
 
     public static int generateDuration() {
         
-        //double random = Math.random();
-        double random = new Random(seed).nextDouble();
-        seed = new Random(seed).nextInt();
+        double random = Math.random();
+        //double random = new Random(seed).nextDouble();
+        //seed = new Random(seed).nextInt();
         
         return (int) Math.floor(-1000 / 0.0091045 * Math.log(1 - random));
     }
