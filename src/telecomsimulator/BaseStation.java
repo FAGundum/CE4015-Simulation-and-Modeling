@@ -41,6 +41,7 @@ public class BaseStation {
     /**
      * The function check if the channels of base station are all reserved.
      * 
+     * @param e e parameter is used to identify which event is trying to reserve station channel
      * @return Return -1 indicating all channels are reserved, Return 0-9 indicating this particular channel is not reserved
      * 
      */

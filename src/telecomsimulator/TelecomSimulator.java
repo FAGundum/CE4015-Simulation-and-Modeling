@@ -11,7 +11,7 @@ public class TelecomSimulator {
     
     private static final String csvPath = "C:\\Users\\Derek\\Dropbox\\Year 4 Sem 2\\CE4015 Simulation and Modeling\\Assignment\\Output.csv";
     
-    private static final int TOTAL_SIMULATION_TIMES = 80000;
+    private static final int TOTAL_SIMULATION_TIMES = 2000;
     private static final int TOTAL_WARMUP_TIMES = 20000;
     
     // Simulation clock
@@ -35,6 +35,8 @@ public class TelecomSimulator {
         while(true) {
             
             Event currentEvent = schedule();
+            simulationClock = currentEvent.getTime();
+            
             execute(currentEvent);
             
             if (numberOfCalls >= TOTAL_WARMUP_TIMES) {
@@ -70,6 +72,7 @@ public class TelecomSimulator {
      * The function will try to reserve a channel from base station.
      * 
      * @param baseStationId the current baseStation user is accessing.
+     * @param e e parameter is used to identify which event is trying to reserve station channel
      * @return Return -1 indicating all channels have been reserved, Return 0-9 indicating this particular channel is reserved for this Call.
      * 
      */
@@ -176,7 +179,7 @@ public class TelecomSimulator {
         // initialize 20 base stations
         for (int i = 0; i < 20; i++) {
             
-            baseStations.add(i, new BaseStation(i, 0)); // 0 means no reservation
+            baseStations.add(i, new BaseStation(i, 1)); // 0 means no reservation
             
         }
         
