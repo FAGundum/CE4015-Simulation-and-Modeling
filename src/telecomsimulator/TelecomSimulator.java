@@ -9,7 +9,9 @@ import java.util.*;
 
 public class TelecomSimulator {
     
-    private static final int TOTAL_SIMULATION_TIMES = 1000;
+    private static final String csvPath = "C:\\Users\\Derek\\Dropbox\\Year 4 Sem 2\\CE4015 Simulation and Modeling\\Assignment\\Output.csv";
+    
+    private static final int TOTAL_SIMULATION_TIMES = 500000;
     private static final int TOTAL_WARMUP_TIMES = 20;
     
     // Simulation clock
@@ -28,6 +30,7 @@ public class TelecomSimulator {
         
         initialization();
         
+        /*
         while(true) {
             
             Event currentEvent = schedule();
@@ -43,6 +46,7 @@ public class TelecomSimulator {
             }
             
         }
+        */
         
         while(true) {
             
@@ -117,6 +121,13 @@ public class TelecomSimulator {
         
         numberOfCalls++;
         
+        ArrayList<Number> contents = new ArrayList<>();
+        contents.add(1);
+        contents.add(0);
+        contents.add(0);
+        
+        Utils.saveToCsv(csvPath, contents);
+        
     }
     
     public static void recordDroppedCall() {
@@ -124,6 +135,12 @@ public class TelecomSimulator {
         numberOfCalls++;
         numberOfDroppedCalls++;
         
+        ArrayList<Number> contents = new ArrayList<>();
+        contents.add(1);
+        contents.add(1);
+        contents.add(0);
+        
+        Utils.saveToCsv(csvPath, contents);
     }
     
     public static void recordBlockedCall() {
@@ -131,6 +148,12 @@ public class TelecomSimulator {
         numberOfCalls++;
         numberOfBlockedCalls++;
         
+        ArrayList<Number> contents = new ArrayList<>();
+        contents.add(1);
+        contents.add(0);
+        contents.add(1);
+        
+        Utils.saveToCsv(csvPath, contents);
     }
     
     // Initialization Routine
@@ -153,6 +176,15 @@ public class TelecomSimulator {
         // initialize event list, the event list will start with a Call Initiation Event
         eventList = new LinkedList<>();
         eventList.push(new CallInitiationEvent(0, 120, 0, 0, 110000));
+        
+        // initialize output file
+        
+        ArrayList<String> headerNames = new ArrayList<>();
+        headerNames.add("Total number of calls");
+        headerNames.add("Total number of dropped calls");
+        headerNames.add("Total number of blocked calls");
+        
+        Utils.initializeCsv(csvPath, null);
         
     }
     
