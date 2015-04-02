@@ -24,16 +24,24 @@ public class Utils {
         
         headerNames.add("inter arrival time");
         headerNames.add("station id");
+        headerNames.add("call duration");
+        headerNames.add("car speed");
         
         initializeCsv(distributionTestPath, headerNames);
         
-        for (int i = 1; i <= 10000; i++) {
+        for (int i = 1; i <= 1000; i++) {
             
             Integer interArrivalTime = Utils.generateInterArrivalTime();
             contents.add(interArrivalTime);
             
             Integer stationId = Utils.generateStationId();
             contents.add(stationId);
+            
+            Integer duration = Utils.generateDuration();
+            contents.add(duration);
+            
+            Double carSpeed = Utils.generateCarSpeed();
+            contents.add(carSpeed);
             
             saveToCsv(distributionTestPath, contents);
             

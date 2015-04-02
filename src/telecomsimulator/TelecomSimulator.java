@@ -11,7 +11,7 @@ public class TelecomSimulator {
     
     private static final String csvPath = "C:\\Users\\Derek\\Dropbox\\Year 4 Sem 2\\CE4015 Simulation and Modeling\\Assignment\\Output.csv";
     
-    private static final int TOTAL_SIMULATION_TIMES = 500000;
+    private static final int TOTAL_SIMULATION_TIMES = 10000;
     private static final int TOTAL_WARMUP_TIMES = 20;
     
     // Simulation clock
