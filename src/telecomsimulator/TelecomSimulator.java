@@ -11,7 +11,8 @@ public class TelecomSimulator {
     
     private static final String csvPath = "C:\\Users\\Derek\\Dropbox\\Year 4 Sem 2\\CE4015 Simulation and Modeling\\Assignment\\Output.csv";
     
-    private static final int TOTAL_SIMULATION_TIMES = 2000;
+    private static final int TOTAL_SIMULATION_RUNS = 3000;
+    private static final int TOTAL_SIMULATION_TIMES = 1000;
     private static final int TOTAL_WARMUP_TIMES = 20000;
     
     // Simulation clock
@@ -19,6 +20,7 @@ public class TelecomSimulator {
 
     // System state variable
     private static ArrayList<BaseStation> baseStations;
+    private static int numberOfRuns;
     private static int numberOfCalls;
     private static int numberOfDroppedCalls;
     private static int numberOfBlockedCalls;
@@ -30,42 +32,69 @@ public class TelecomSimulator {
     
     public static void main(String[] args) {
         
-        initialization();
+        numberOfRuns = 0;
+        
+        // initialize output file
+        
+        ArrayList<String> headerNames = new ArrayList<>();
+        headerNames.add("Drop Rate");
+        headerNames.add("Block Rate");
+        
+        Utils.initializeCsv(csvPath, headerNames);
         
         while(true) {
+        
+            initialization();
+
+            while(true) {
+
+                Event currentEvent = schedule();
+                simulationClock = currentEvent.getTime();
+
+                execute(currentEvent);
+
+                if (numberOfCalls >= TOTAL_WARMUP_TIMES) {
+
+                    numberOfCalls = 0;
+                    numberOfDroppedCalls = 0;
+                    numberOfBlockedCalls = 0;
+                    recordEnabled = true;
+                    break;
+
+                }
+
+            }
+
+            while(true) {
+
+                Event currentEvent = schedule();
+                execute(currentEvent);
+
+                if (numberOfCalls >= TOTAL_SIMULATION_TIMES) {
+                    
+                    double dropRate = (double) numberOfDroppedCalls / numberOfCalls;
+                    double blockRate = (double) numberOfBlockedCalls / numberOfCalls;
+                    
+                    ArrayList<Number> contents = new ArrayList<>();
+                    contents.add(dropRate);
+                    contents.add(blockRate);
+                    
+                    Utils.saveToCsv(csvPath, contents);
+                    numberOfRuns++;
+                    System.out.println(numberOfRuns*100/TOTAL_SIMULATION_RUNS + "%\n");
+                    
+                    break;
+                    
+                }
+            }
             
-            Event currentEvent = schedule();
-            simulationClock = currentEvent.getTime();
-            
-            execute(currentEvent);
-            
-            if (numberOfCalls >= TOTAL_WARMUP_TIMES) {
+            if (numberOfRuns >= TOTAL_SIMULATION_RUNS) {
                 
-                numberOfCalls = 0;
-                numberOfDroppedCalls = 0;
-                numberOfBlockedCalls = 0;
-                recordEnabled = true;
+                System.out.println("Simulation Ended.");
                 break;
                 
             }
-            
         }
-        
-        while(true) {
-            
-            Event currentEvent = schedule();
-            execute(currentEvent);
-            
-            if (numberOfCalls >= TOTAL_SIMULATION_TIMES) {
-                
-                // Compute statistics and write report
-                System.out.println("Total call simulated: " + numberOfCalls);
-                System.out.println("Total dropped call: " + numberOfDroppedCalls);
-                System.out.println("Total blocked call: " + numberOfBlockedCalls);
-                break;
-            }
-        }
-        
     }
     
     /**
@@ -125,14 +154,6 @@ public class TelecomSimulator {
         
         numberOfCalls++;
         
-        ArrayList<Number> contents = new ArrayList<>();
-        contents.add(1);
-        contents.add(0);
-        contents.add(0);
-        
-        if (recordEnabled) {
-            Utils.saveToCsv(csvPath, contents);
-        }
     }
     
     public static void recordDroppedCall() {
@@ -140,14 +161,6 @@ public class TelecomSimulator {
         numberOfCalls++;
         numberOfDroppedCalls++;
         
-        ArrayList<Number> contents = new ArrayList<>();
-        contents.add(1);
-        contents.add(1);
-        contents.add(0);
-        
-        if (recordEnabled) {
-            Utils.saveToCsv(csvPath, contents);
-        }
     }
     
     public static void recordBlockedCall() {
@@ -160,9 +173,6 @@ public class TelecomSimulator {
         contents.add(0);
         contents.add(1);
         
-        if (recordEnabled) {
-            Utils.saveToCsv(csvPath, contents);
-        }
     }
     
     // Initialization Routine
@@ -186,15 +196,6 @@ public class TelecomSimulator {
         // initialize event list, the event list will start with a Call Initiation Event
         eventList = new LinkedList<>();
         eventList.push(new CallInitiationEvent(0, 120, 0, 0, 110000));
-        
-        // initialize output file
-        
-        ArrayList<String> headerNames = new ArrayList<>();
-        headerNames.add("Total number of calls");
-        headerNames.add("Total number of dropped calls");
-        headerNames.add("Total number of blocked calls");
-        
-        Utils.initializeCsv(csvPath, headerNames);
         
     }
     
