@@ -37,7 +37,7 @@ public class BaseStation {
      * @return Return -1 indicating all channels are reserved, Return 0-9 indicating this particular channel is not reserved
      * 
      */
-        public int isFull() {
+    public int isFull() {
         
         for (int i = 0; i < 10; i++) {
             

@@ -184,7 +184,7 @@ public class TelecomSimulator {
         headerNames.add("Total number of dropped calls");
         headerNames.add("Total number of blocked calls");
         
-        Utils.initializeCsv(csvPath, null);
+        Utils.initializeCsv(csvPath, headerNames);
         
     }
     

@@ -72,7 +72,7 @@ public class CallHandOverEvent extends Event {
             int newEventStationId = stationId + 1;
             int newRemainingDuration = remainingDuration - durationToNextStation;
             
-            TelecomSimulator.insertEvent(new CallHandOverEvent(newEventTime, speed, newEventStationId, channelId, newRemainingDuration));
+            TelecomSimulator.insertEvent(new CallHandOverEvent(newEventTime, speed, newEventStationId, newChannelId, newRemainingDuration));
             
         } else if (remainingDuration > durationToNextStation && stationId == 19) {
             
