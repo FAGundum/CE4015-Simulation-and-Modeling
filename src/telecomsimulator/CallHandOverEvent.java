@@ -51,7 +51,7 @@ public class CallHandOverEvent extends Event {
         
         // 1. Update system state
         TelecomSimulator.release(stationId - 1, channelId);
-        int newChannelId = TelecomSimulator.tryReserve(stationId);
+        int newChannelId = TelecomSimulator.tryReserve(stationId, this);
         
         // 2. Update statistical counters
         if (newChannelId == -1) {

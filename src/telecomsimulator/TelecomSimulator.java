@@ -11,8 +11,8 @@ public class TelecomSimulator {
     
     private static final String csvPath = "C:\\Users\\Derek\\Dropbox\\Year 4 Sem 2\\CE4015 Simulation and Modeling\\Assignment\\Output.csv";
     
-    private static final int TOTAL_SIMULATION_TIMES = 10000;
-    private static final int TOTAL_WARMUP_TIMES = 20;
+    private static final int TOTAL_SIMULATION_TIMES = 80000;
+    private static final int TOTAL_WARMUP_TIMES = 20000;
     
     // Simulation clock
     private static int simulationClock;
@@ -23,6 +23,8 @@ public class TelecomSimulator {
     private static int numberOfDroppedCalls;
     private static int numberOfBlockedCalls;
     
+    private static boolean recordEnabled;
+    
     // Event list
     private static LinkedList<Event> eventList;
     
@@ -30,7 +32,6 @@ public class TelecomSimulator {
         
         initialization();
         
-        /*
         while(true) {
             
             Event currentEvent = schedule();
@@ -41,12 +42,12 @@ public class TelecomSimulator {
                 numberOfCalls = 0;
                 numberOfDroppedCalls = 0;
                 numberOfBlockedCalls = 0;
+                recordEnabled = true;
                 break;
                 
             }
             
         }
-        */
         
         while(true) {
             
@@ -72,9 +73,9 @@ public class TelecomSimulator {
      * @return Return -1 indicating all channels have been reserved, Return 0-9 indicating this particular channel is reserved for this Call.
      * 
      */
-    public static int tryReserve(int baseStationId) {
+    public static int tryReserve(int baseStationId, Event e) {
         
-        int channelId = baseStations.get(baseStationId).isFull();
+        int channelId = baseStations.get(baseStationId).isFull(e);
         
         if (channelId == -1) {
             
@@ -126,8 +127,9 @@ public class TelecomSimulator {
         contents.add(0);
         contents.add(0);
         
-        Utils.saveToCsv(csvPath, contents);
-        
+        if (recordEnabled) {
+            Utils.saveToCsv(csvPath, contents);
+        }
     }
     
     public static void recordDroppedCall() {
@@ -140,7 +142,9 @@ public class TelecomSimulator {
         contents.add(1);
         contents.add(0);
         
-        Utils.saveToCsv(csvPath, contents);
+        if (recordEnabled) {
+            Utils.saveToCsv(csvPath, contents);
+        }
     }
     
     public static void recordBlockedCall() {
@@ -153,7 +157,9 @@ public class TelecomSimulator {
         contents.add(0);
         contents.add(1);
         
-        Utils.saveToCsv(csvPath, contents);
+        if (recordEnabled) {
+            Utils.saveToCsv(csvPath, contents);
+        }
     }
     
     // Initialization Routine
@@ -164,12 +170,13 @@ public class TelecomSimulator {
         numberOfCalls = 0;
         numberOfDroppedCalls = 0;
         numberOfBlockedCalls = 0;
+        recordEnabled = false;
         baseStations = new ArrayList<>();
         
         // initialize 20 base stations
         for (int i = 0; i < 20; i++) {
             
-            baseStations.add(i, new BaseStation(i));
+            baseStations.add(i, new BaseStation(i, 0)); // 0 means no reservation
             
         }
         

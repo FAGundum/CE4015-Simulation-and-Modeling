@@ -50,7 +50,7 @@ public class CallInitiationEvent extends Event{
     public void handle() {
         
         // 1. Update system states
-        int channelId = TelecomSimulator.tryReserve(stationId);
+        int channelId = TelecomSimulator.tryReserve(stationId, this);
         
         // 2. Update statistical counters
         if (channelId == -1) {

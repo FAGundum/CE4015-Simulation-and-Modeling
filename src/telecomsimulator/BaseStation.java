@@ -13,12 +13,15 @@ import java.util.ArrayList;
  */
 public class BaseStation {
     
+    
     private final int id;
+    private final int numberOfReservedChannels;
     private ArrayList<Channel> channels;
     
-    public BaseStation(int id) {
+    public BaseStation(int id, int numberOfReservedChannels) {
         
         this.id = id;
+        this.numberOfReservedChannels = numberOfReservedChannels;
         initializeChannel();        
         
     }
@@ -29,7 +32,11 @@ public class BaseStation {
         
     }
     
-    // 
+    public int getNumberOfReservedChannels() {
+        
+        return this.numberOfReservedChannels;
+        
+    }
 
     /**
      * The function check if the channels of base station are all reserved.
@@ -37,12 +44,24 @@ public class BaseStation {
      * @return Return -1 indicating all channels are reserved, Return 0-9 indicating this particular channel is not reserved
      * 
      */
-    public int isFull() {
+    public int isFull(Event e) {
         
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10 - this.numberOfReservedChannels; i++) {
             
             if (!this.channels.get(i).isReserved()) {
                 return i;
+            }
+            
+        }
+        
+        if (e instanceof CallHandOverEvent) {
+            
+            for (int i = 9; i >= 10 - this.numberOfReservedChannels; i--) {
+                
+                if (!this.channels.get(i).isReserved()) {
+                    return i;
+                }
+                
             }
             
         }
@@ -89,5 +108,6 @@ public class BaseStation {
         }
         
     }
+    
     
 }
