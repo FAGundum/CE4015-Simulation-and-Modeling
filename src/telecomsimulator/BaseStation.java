@@ -5,24 +5,18 @@
  */
 package telecomsimulator;
 
-import java.util.ArrayList;
-
-/**
- *
- * @author Derek
- */
 public class BaseStation {
     
     
     private final int id;
     private final int numberOfReservedChannels;
-    private ArrayList<Channel> channels;
+    private int freeChannels;
     
     public BaseStation(int id, int numberOfReservedChannels) {
         
         this.id = id;
         this.numberOfReservedChannels = numberOfReservedChannels;
-        initializeChannel();        
+        this.freeChannels = 10;
         
     }
     
@@ -37,78 +31,56 @@ public class BaseStation {
         return this.numberOfReservedChannels;
         
     }
+    
+    public int getNumberOfFreeChannel() {
+        
+        return this.freeChannels;
+        
+    }
 
     /**
      * The function check if the channels of base station are all reserved.
      * 
      * @param e e parameter is used to identify which event is trying to reserve station channel
-     * @return Return -1 indicating all channels are reserved, Return 0-9 indicating this particular channel is not reserved
+     * @return Return TRUE indicating all channels are reserved, Return FALSE indicating free channel is available
      * 
      */
-    public int isFull(Event e) {
+    public boolean isFull(Event e) {
         
-        for (int i = 0; i < 10 - this.numberOfReservedChannels; i++) {
+        if (this.freeChannels - this.numberOfReservedChannels > 0) {
             
-            if (!this.channels.get(i).isReserved()) {
-                return i;
-            }
+            return false;
             
-        }
-        
-        if (e instanceof CallHandOverEvent) {
+        } else if (e instanceof CallHandOverEvent && this.freeChannels > 0) {
             
-            for (int i = 9; i >= 10 - this.numberOfReservedChannels; i--) {
-                
-                if (!this.channels.get(i).isReserved()) {
-                    return i;
-                }
-                
-            }
+            return false;
+            
+        } else {
+            
+            return true;
             
         }
         
-        return -1;
+    }
+    
+    public void reserveChannel() {
+        
+        this.freeChannels --;
         
     }
     
-    public void reserveChannel(int i) {
+    public void releaseChannel() {
         
-        this.channels.get(i).reserve();
-        
-    }
-    
-    public void releaseChannel(int i) {
-        
-        this.channels.get(i).release();
+        this.freeChannels ++;
         
     }
     
     public String debugMsg() {
         
-        String msg = "Status of Base Station " + this.id + " is shown below: \n ";
-        
-        for (int i = 0; i < 10; i++) {
-            
-            msg += this.channels.get(i).debugMsg();
-            
-        }
+        String msg = "Base Station " + this.id + " has " + this.freeChannels + " available! \n ";
         
         return msg;
         
     }
-    
-    private void initializeChannel() {
-        
-        this.channels = new ArrayList<>();
-        
-        // Initialize 10 free channels
-        for (int i = 0; i < 10; i++) {
-            
-            this.channels.add(i, new Channel(i));
-            
-        }
-        
-    }
-    
     
 }

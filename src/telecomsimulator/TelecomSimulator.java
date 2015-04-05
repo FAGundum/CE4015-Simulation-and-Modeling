@@ -11,7 +11,7 @@ public class TelecomSimulator {
     
     private static final String csvPath = "C:\\Users\\Derek\\Dropbox\\Year 4 Sem 2\\CE4015 Simulation and Modeling\\Assignment\\Output.csv";
     
-    private static final int TOTAL_SIMULATION_RUNS = 3000;
+    private static final int TOTAL_SIMULATION_RUNS = 1000;
     private static final int TOTAL_SIMULATION_TIMES = 1000;
     private static final int TOTAL_WARMUP_TIMES = 20000;
     
@@ -50,7 +50,7 @@ public class TelecomSimulator {
 
                 Event currentEvent = schedule();
                 simulationClock = currentEvent.getTime();
-
+                
                 execute(currentEvent);
 
                 if (numberOfCalls >= TOTAL_WARMUP_TIMES) {
@@ -105,24 +105,22 @@ public class TelecomSimulator {
      * @return Return -1 indicating all channels have been reserved, Return 0-9 indicating this particular channel is reserved for this Call.
      * 
      */
-    public static int tryReserve(int baseStationId, Event e) {
+    public static boolean tryReserve(int baseStationId, Event e) {
         
-        int channelId = baseStations.get(baseStationId).isFull(e);
-        
-        if (channelId == -1) {
+        if (baseStations.get(baseStationId).isFull(e)) {
             
-            return channelId;
+            return false;
         
         }
         
-        baseStations.get(baseStationId).reserveChannel(channelId);
+        baseStations.get(baseStationId).reserveChannel();
         
-        return channelId;
+        return true;
     }
     
-    public static void release(int baseStationId, int channelId) {
+    public static void release(int baseStationId) {
         
-        baseStations.get(baseStationId).releaseChannel(channelId);
+        baseStations.get(baseStationId).releaseChannel();
         
     }
     
@@ -168,11 +166,6 @@ public class TelecomSimulator {
         numberOfCalls++;
         numberOfBlockedCalls++;
         
-        ArrayList<Number> contents = new ArrayList<>();
-        contents.add(1);
-        contents.add(0);
-        contents.add(1);
-        
     }
     
     // Initialization Routine
@@ -189,7 +182,7 @@ public class TelecomSimulator {
         // initialize 20 base stations
         for (int i = 0; i < 20; i++) {
             
-            baseStations.add(i, new BaseStation(i, 1)); // 0 means no reservation
+            baseStations.add(i, new BaseStation(i, 0)); // 0 means no reservation
             
         }
         
