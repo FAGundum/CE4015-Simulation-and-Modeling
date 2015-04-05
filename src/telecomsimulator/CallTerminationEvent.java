@@ -8,13 +8,11 @@ package telecomsimulator;
 public class CallTerminationEvent extends Event {
     
     private final int stationId;
-    private final int channelId;
     
-    public CallTerminationEvent(int time, int stationId, int channelId) {
+    public CallTerminationEvent(int time, int stationId) {
         
         super(time);
         this.stationId = stationId;
-        this.channelId = channelId;
     }
     
     public int getStationId() {
@@ -22,18 +20,12 @@ public class CallTerminationEvent extends Event {
         return this.stationId;
         
     }
-    
-    public int getChannelId() {
-        
-        return this.channelId;
-        
-    }
 
     @Override
     public void handle() {
         
         // 1. Update system state
-        TelecomSimulator.release(stationId, channelId);
+        TelecomSimulator.release(stationId);
         
         // 2. Update statistical counters
         TelecomSimulator.recordNormalCall();
