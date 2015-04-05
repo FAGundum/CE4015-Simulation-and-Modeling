@@ -29,7 +29,7 @@ public class Utils {
         
         initializeCsv(distributionTestPath, headerNames);
         
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 10000; i++) {
             
             Integer interArrivalTime = Utils.generateInterArrivalTime();
             contents.add(interArrivalTime);
@@ -99,7 +99,7 @@ public class Utils {
         //double random = new Random(seed).nextDouble();
         //seed = new Random(seed).nextInt();
         
-        return (int) Math.floor(-1000 / 0.0091045 * Math.log(1 - random));
+        return (int) Math.floor(-1000 / 0.01001674 * Math.log(1 - random) + 10000);
     }
 
     static void saveToCsv(String filePath, ArrayList<Number> contents) {

@@ -45,7 +45,7 @@ public class TelecomSimulator {
         while(true) {
         
             initialization();
-
+            
             while(true) {
 
                 Event currentEvent = schedule();
@@ -64,7 +64,7 @@ public class TelecomSimulator {
                 }
 
             }
-
+            
             while(true) {
 
                 Event currentEvent = schedule();
@@ -182,7 +182,7 @@ public class TelecomSimulator {
         // initialize 20 base stations
         for (int i = 0; i < 20; i++) {
             
-            baseStations.add(i, new BaseStation(i, 0)); // 0 means no reservation
+            baseStations.add(i, new BaseStation(i, 1)); // 0 means no reservation
             
         }
         
