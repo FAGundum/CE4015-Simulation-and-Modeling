@@ -50,10 +50,10 @@ public class CallInitiationEvent extends Event{
     public void handle() {
         
         // 1. Update system states
-        int channelId = TelecomSimulator.tryReserve(stationId, this);
+        boolean result = TelecomSimulator.tryReserve(stationId, this);
         
         // 2. Update statistical counters
-        if (channelId == -1) {
+        if (result == false) {
             
             TelecomSimulator.recordBlockedCall();
             
@@ -71,7 +71,7 @@ public class CallInitiationEvent extends Event{
         }
                 
         // 3.1 Generate handover or departure events
-        double distanceToNextStation = ((stationId+1) * 2 - position);
+        double distanceToNextStation = 2 - position;
         int durationToNextStation = (int) Math.round(distanceToNextStation / speed * 3600 * 1000);
         
         if (duration > durationToNextStation && stationId != 19) {
@@ -81,21 +81,21 @@ public class CallInitiationEvent extends Event{
             int newEventStationId = stationId + 1;
             int remainingDuration = duration - durationToNextStation;
             
-            TelecomSimulator.insertEvent(new CallHandOverEvent(newEventTime, speed, newEventStationId, channelId, remainingDuration));
+            TelecomSimulator.insertEvent(new CallHandOverEvent(newEventTime, speed, newEventStationId, remainingDuration));
             
         } else if (duration > durationToNextStation && stationId == 19) {
             
             // the car has travelled outside of the system
             int newEventTime = time + durationToNextStation;
             
-            TelecomSimulator.insertEvent(new CallTerminationEvent(newEventTime, stationId, channelId));
+            TelecomSimulator.insertEvent(new CallTerminationEvent(newEventTime, stationId));
             
         } else {
             
             // No need to handover
             int newEventTime = time + duration;
             
-            TelecomSimulator.insertEvent(new CallTerminationEvent(newEventTime, stationId, channelId));
+            TelecomSimulator.insertEvent(new CallTerminationEvent(newEventTime, stationId));
             
         }
         
